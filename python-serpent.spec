@@ -1,4 +1,5 @@
 # Created by pyp2rpm-3.3.3
+%bcond_without tests
 %global pypi_name serpent
 
 Name:           python-%{pypi_name}
@@ -13,6 +14,9 @@ BuildArch:      noarch
 
 BuildRequires:  python-devel
 BuildRequires:  python-setuptools
+%if %{with tests}
+BuildRequires:  python-attrs
+%endif
 
 %description
 Serpent is a simple serialization library based on ast.literal_eval.Because it
@@ -34,8 +38,11 @@ rm -rf %{pypi_name}.egg-info
 %install
 %py3_install
 
+%if %{with tests}
 %check
 %{__python3} setup.py test
+%endif
+
 
 %files -n python-%{pypi_name}
 %license LICENSE
