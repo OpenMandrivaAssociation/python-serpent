@@ -16,6 +16,7 @@ BuildRequires:  python-devel
 BuildRequires:  python-setuptools
 %if %{with tests}
 BuildRequires:  python-attrs
+BuildRequires:  python-pytz
 %endif
 
 %description
