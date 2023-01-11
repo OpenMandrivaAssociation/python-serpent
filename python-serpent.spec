@@ -1,15 +1,14 @@
-# Created by pyp2rpm-3.3.3
 %bcond_without tests
 %global pypi_name serpent
 
 Name:           python-%{pypi_name}
-Version:        1.30.2
+Version:        1.41
 Release:        1
 Summary:        Serialization based on ast.literal_eval
 
 License:        MIT
 URL:            https://github.com/irmen/Serpent
-Source0:        https://files.pythonhosted.org/packages/source/s/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/s/serpent/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  python-devel
@@ -34,22 +33,18 @@ implementation available.
 rm -rf %{pypi_name}.egg-info
 
 %build
-%py3_build
+%py_build
 
 %install
-%py3_install
+%py_install
 
 %if %{with tests}
 %check
-%{__python3} setup.py test
+python setup.py test
 %endif
-
 
 %files -n python-%{pypi_name}
 %license LICENSE
 %doc README.md
-%{python3_sitelib}/__pycache__/*
 %{python3_sitelib}/%{pypi_name}.py
-#%%{python3_sitelib}/%{pypi_name}
 %{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
-
