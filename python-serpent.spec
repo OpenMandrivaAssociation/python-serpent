@@ -1,21 +1,26 @@
-%bcond_without tests
-%global pypi_name serpent
+%bcond tests 1
+%global module serpent
 
-Name:           python-%{pypi_name}
-Version:        1.41
-Release:        3
-Summary:        Serialization based on ast.literal_eval
+Name:		python-serpent
+Version:	1.42
+Release:	1
+Summary:	Serialization based on ast.literal_eval
+Group:		Development/Python
+License:	MIT
+URL:		https://github.com/irmen/Serpent
+Source0:	https://files.pythonhosted.org/packages/source/s/serpent/%{module}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+BuildArch:	noarch
 
-License:        MIT
-URL:            https://github.com/irmen/Serpent
-Source0:        https://files.pythonhosted.org/packages/source/s/serpent/%{pypi_name}-%{version}.tar.gz
-BuildArch:      noarch
-
-BuildRequires:  python-devel
-BuildRequires:  python-setuptools
+BuildSystem:	python
+BuildRequires:	python
+BuildRequires:	pkgconfig(python)
+BuildRequires:  python%{pyver}dist(pip)
+BuildRequires:  python%{pyver}dist(setuptools)
+BuildRequires:  python%{pyver}dist(wheel)
 %if %{with tests}
-BuildRequires:  python-attrs
-BuildRequires:  python-pytz
+BuildRequires:  python%{pyver}dist(attrs)
+BuildRequires:  python%{pyver}dist(pytest)
+BuildRequires:  python%{pyver}dist(pytz)
 %endif
 
 %description
@@ -25,26 +30,23 @@ the serialized data is safe to transport to other machines (over the network
 for instance) and de-serialize it there.*There is also a Java and a .NET (C)
 implementation available.
 
-%{?python_provide:%python_provide python-%{pypi_name}}
+%{?python_provide:%python_provide python-%{module}}
 
 %prep
-%autosetup -n %{pypi_name}-%{version}
+%autosetup -n %{module}-%{version}
 # Remove bundled egg-info
-rm -rf %{pypi_name}.egg-info
+rm -rf %{module}.egg-info
 
-%build
-%py_build
-
-%install
-%py_install
 
 %if %{with tests}
 %check
-python setup.py test
+export CI=true
+export PYTHONPATH="%{buildroot}%{python_sitelib}:${PWD}"
+pytest
 %endif
 
-%files -n python-%{pypi_name}
+%files
 %license LICENSE
 %doc README.md
-%{python3_sitelib}/%{pypi_name}.py
-%{python3_sitelib}/%{pypi_name}-%{version}-py%{python3_version}.egg-info
+%{python_sitelib}/%{module}.py
+%{python_sitelib}/%{module}-%{version}-py%{pyver}.egg-info
