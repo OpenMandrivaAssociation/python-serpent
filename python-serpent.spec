@@ -1,26 +1,25 @@
+%define module serpent
 %bcond tests 1
-%global module serpent
 
 Name:		python-serpent
-Version:	1.42
+Version:	1.43
 Release:	1
 Summary:	Serialization based on ast.literal_eval
 Group:		Development/Python
 License:	MIT
 URL:		https://github.com/irmen/Serpent
-Source0:	https://files.pythonhosted.org/packages/source/s/serpent/%{module}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:	https://files.pythonhosted.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
 BuildSystem:	python
-BuildRequires:	python
 BuildRequires:	pkgconfig(python)
-BuildRequires:  python%{pyver}dist(pip)
-BuildRequires:  python%{pyver}dist(setuptools)
-BuildRequires:  python%{pyver}dist(wheel)
+BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(setuptools)
+BuildRequires:	python%{pyver}dist(wheel)
 %if %{with tests}
-BuildRequires:  python%{pyver}dist(attrs)
-BuildRequires:  python%{pyver}dist(pytest)
-BuildRequires:  python%{pyver}dist(pytz)
+BuildRequires:	python%{pyver}dist(attrs)
+BuildRequires:	python%{pyver}dist(pytest)
+BuildRequires:	python%{pyver}dist(pytz)
 %endif
 
 %description
@@ -30,13 +29,9 @@ the serialized data is safe to transport to other machines (over the network
 for instance) and de-serialize it there.*There is also a Java and a .NET (C)
 implementation available.
 
-%{?python_provide:%python_provide python-%{module}}
-
-%prep
-%autosetup -n %{module}-%{version}
+%prep -a
 # Remove bundled egg-info
 rm -rf %{module}.egg-info
-
 
 %if %{with tests}
 %check
