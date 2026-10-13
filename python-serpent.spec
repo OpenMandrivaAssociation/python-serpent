@@ -3,7 +3,7 @@
 
 Name:		python-serpent
 Version:	1.43
-Release:	1
+Release:	2
 Summary:	Serialization based on ast.literal_eval
 Group:		Development/Python
 License:	MIT
@@ -12,7 +12,7 @@ Source0:	https://files.pythonhosted.org/packages/source/s/%{module}/%{module}-%{
 BuildArch:	noarch
 
 BuildSystem:	python
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python3)
 BuildRequires:	python%{pyver}dist(pip)
 BuildRequires:	python%{pyver}dist(setuptools)
 BuildRequires:	python%{pyver}dist(wheel)
